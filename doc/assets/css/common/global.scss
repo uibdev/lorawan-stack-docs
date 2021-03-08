@@ -162,4 +162,5 @@ table.fixed td { overflow: auto; }
 
 .card {
   overflow: visible;
+  z-index: -1; // Fix for search floating underneath cards
 }

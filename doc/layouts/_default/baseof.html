@@ -9,7 +9,6 @@
 <body>
 
 {{- partial "header/nav.html" . -}}
-{{- partial "header/search.html" . -}}
 
 {{ if $hasSidebar }}
 <div class="container" role="document">
@@ -26,6 +25,9 @@
   </div>
 </div>
 {{ else }}
+
+{{- partial "header/search.html" . -}}
+
 <div class="container" role="document">
   <div class="columns my-0 is-desktop">
     <div class="column">

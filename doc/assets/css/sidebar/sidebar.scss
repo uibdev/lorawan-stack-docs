@@ -43,3 +43,19 @@
 .toc, .docs-content, .side-navigation {
   padding-top: $content-padding-top;
 }
+
+.side-navigation {
+  overflow: visible;
+  z-index: 9999;
+}
+
+.search-container-sidebar {
+  margin-bottom: 2.5rem;
+}
+
+.search-sidebar {
+  border: solid 1px #888888;
+  background-color: white;
+  border-radius: 5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
+}
