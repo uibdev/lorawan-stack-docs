@@ -1005,8 +1005,6 @@ ApplicationUplink:
     default: []
   - name: rx_metadata
     comment: A list of metadata for each antenna of each gateway that received this message.
-    rules:
-      min_items: 1
     repeated:
       message:
         name: RxMetadata
@@ -1527,6 +1525,42 @@ CUPSRedirection:
     type: string
     rules:
       max_len: 2048
+    default: ""
+  - name: target_cups_trust
+    comment: Optional PEM encoded CA Root certificate. If this field is empty, DCS will attempt to dial the Target CUPS server and fetch the CA.
+    type: bytes
+    default: ""
+  - name: client_tls
+    comment: 'TODO: Support mTLS (https://github.com/TheThingsNetwork/lorawan-stack/issues/137)'
+    message:
+      name: CUPSRedirection.ClientTLS
+    default: {}
+  - name: auth_token
+    comment: HTTP Auth token for CUPS requests. If this field is left blank and Client TLS is empty, the DCS will create a The Things Stack API Key.
+    type: string
+    rules:
+      max_len: 2048
+    default: ""
+  oneofs:
+  - name: gateway_credentials
+    comment: CUPS Credentials for the gateway.
+    field_names:
+    - client_tls
+    - auth_token
+CUPSRedirection.ClientTLS:
+  name: CUPSRedirection.ClientTLS
+  fields:
+  - name: cert
+    comment: PEM encoded Client Certificate.
+    type: bytes
+    rules:
+      max_len: 8192
+    default: ""
+  - name: key
+    comment: PEM encoded Client Private Key.
+    type: bytes
+    rules:
+      max_len: 8192
     default: ""
 ClaimEndDeviceRequest:
   name: ClaimEndDeviceRequest
@@ -2580,6 +2614,15 @@ DevAddrPrefix:
     comment: Number of most significant bits from dev_addr that are used as prefix.
     type: uint32
     default: 0
+DeviceEIRPValue:
+  name: DeviceEIRPValue
+  fields:
+  - name: value
+    enum:
+      name: DeviceEIRP
+    rules:
+      defined_only: true
+    default: DEVICE_EIRP_8
 DownlinkMessage:
   name: DownlinkMessage
   comment: Downlink message from the network to the end device
@@ -5314,6 +5357,12 @@ IsConfiguration.UserRights:
       package: google.protobuf
       name: BoolValue
     default: null
+IssueDevEUIResponse:
+  name: IssueDevEUIResponse
+  fields:
+  - name: dev_eui
+    type: bytes
+    default: ""
 JoinAcceptMICRequest:
   name: JoinAcceptMICRequest
   fields:
@@ -7378,6 +7427,13 @@ MACSettings:
       If unset, the default value from Network Server configuration will be used.
     message:
       name: FrequencyValue
+    default: {}
+  - name: desired_max_eirp
+    comment: |-
+      Maximum EIRP (dBm).
+      If unset, the default value from regional parameters specification will be used.
+    message:
+      name: DeviceEIRPValue
     default: {}
 MACState:
   name: MACState

@@ -22,7 +22,7 @@ ttn-lw-cli:
     type: stringSlice
     shorthand: c
     usage: Location of the config files
-    default_value: '[.ttn-lw-cli.yml,$HOME/.ttn-lw-cli.yml,$HOME/.config/.ttn-lw-cli.yml]'
+    default_value: '[.ttn-lw-cli.yml,HOME/.ttn-lw-cli.yml,HOME/.config/.ttn-lw-cli.yml]'
   - name: credentials-id
     type: string
     usage: Credentials ID (if using multiple configurations)
@@ -705,6 +705,17 @@ ttn-lw-cli applications get:
     type: bool
     usage: select the name field
     default_value: "false"
+ttn-lw-cli applications issue-dev-eui:
+  path: ttn-lw-cli applications issue-dev-eui
+  parent_path: ttn-lw-cli applications
+  name: issue-dev-eui
+  use: '[application-id]'
+  aliases:
+  - dev-eui
+  short: Issue DevEUI for application
+  command_flags:
+  - name: application-id
+    type: string
 ttn-lw-cli applications link:
   path: ttn-lw-cli applications link
   parent_path: ttn-lw-cli applications
@@ -3711,6 +3722,12 @@ ttn-lw-cli end-devices create:
       DUTY_CYCLE_16384, DUTY_CYCLE_2, DUTY_CYCLE_2048, DUTY_CYCLE_256, DUTY_CYCLE_32,
       DUTY_CYCLE_32768, DUTY_CYCLE_4, DUTY_CYCLE_4096, DUTY_CYCLE_512, DUTY_CYCLE_64,
       DUTY_CYCLE_8, DUTY_CYCLE_8192'
+  - name: mac-settings.desired-max-eirp
+    type: string
+    usage: 'allowed values: DEVICE_EIRP_10, DEVICE_EIRP_12, DEVICE_EIRP_13, DEVICE_EIRP_14,
+      DEVICE_EIRP_16, DEVICE_EIRP_18, DEVICE_EIRP_20, DEVICE_EIRP_21, DEVICE_EIRP_24,
+      DEVICE_EIRP_26, DEVICE_EIRP_27, DEVICE_EIRP_29, DEVICE_EIRP_30, DEVICE_EIRP_33,
+      DEVICE_EIRP_36, DEVICE_EIRP_8'
   - name: mac-settings.desired-ping-slot-data-rate-index
     type: string
     usage: 'allowed values: 0, 1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -4374,6 +4391,10 @@ ttn-lw-cli end-devices create:
     usage: upload the end device picture from this file
   - name: provisioner-id
     type: string
+  - name: request-dev-eui
+    type: bool
+    usage: request a new DevEUI
+    default_value: "false"
   - name: resets-join-nonces
     type: bool
     default_value: "false"
@@ -4853,6 +4874,10 @@ ttn-lw-cli end-devices get:
   - name: mac-settings.desired-max-duty-cycle
     type: bool
     usage: select the mac_settings.desired_max_duty_cycle field
+    default_value: "false"
+  - name: mac-settings.desired-max-eirp
+    type: bool
+    usage: select the mac_settings.desired_max_eirp field
     default_value: "false"
   - name: mac-settings.desired-ping-slot-data-rate-index
     type: bool
@@ -6181,6 +6206,10 @@ ttn-lw-cli end-devices reset:
     type: bool
     usage: select the mac_settings.desired_max_duty_cycle field
     default_value: "false"
+  - name: mac-settings.desired-max-eirp
+    type: bool
+    usage: select the mac_settings.desired_max_eirp field
+    default_value: "false"
   - name: mac-settings.desired-ping-slot-data-rate-index
     type: bool
     usage: select the mac_settings.desired_ping_slot_data_rate_index field
@@ -7419,6 +7448,12 @@ ttn-lw-cli end-devices set:
       DUTY_CYCLE_16384, DUTY_CYCLE_2, DUTY_CYCLE_2048, DUTY_CYCLE_256, DUTY_CYCLE_32,
       DUTY_CYCLE_32768, DUTY_CYCLE_4, DUTY_CYCLE_4096, DUTY_CYCLE_512, DUTY_CYCLE_64,
       DUTY_CYCLE_8, DUTY_CYCLE_8192'
+  - name: mac-settings.desired-max-eirp
+    type: string
+    usage: 'allowed values: DEVICE_EIRP_10, DEVICE_EIRP_12, DEVICE_EIRP_13, DEVICE_EIRP_14,
+      DEVICE_EIRP_16, DEVICE_EIRP_18, DEVICE_EIRP_20, DEVICE_EIRP_21, DEVICE_EIRP_24,
+      DEVICE_EIRP_26, DEVICE_EIRP_27, DEVICE_EIRP_29, DEVICE_EIRP_30, DEVICE_EIRP_33,
+      DEVICE_EIRP_36, DEVICE_EIRP_8'
   - name: mac-settings.desired-ping-slot-data-rate-index
     type: string
     usage: 'allowed values: 0, 1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -11921,6 +11956,10 @@ ttn-lw-cli templates create:
     type: bool
     usage: select the mac_settings.desired_max_duty_cycle field
     default_value: "false"
+  - name: mac-settings.desired-max-eirp
+    type: bool
+    usage: select the mac_settings.desired_max_eirp field
+    default_value: "false"
   - name: mac-settings.desired-ping-slot-data-rate-index
     type: bool
     usage: select the mac_settings.desired_ping_slot_data_rate_index field
@@ -13063,6 +13102,12 @@ ttn-lw-cli templates execute:
       DUTY_CYCLE_16384, DUTY_CYCLE_2, DUTY_CYCLE_2048, DUTY_CYCLE_256, DUTY_CYCLE_32,
       DUTY_CYCLE_32768, DUTY_CYCLE_4, DUTY_CYCLE_4096, DUTY_CYCLE_512, DUTY_CYCLE_64,
       DUTY_CYCLE_8, DUTY_CYCLE_8192'
+  - name: mac-settings.desired-max-eirp
+    type: string
+    usage: 'allowed values: DEVICE_EIRP_10, DEVICE_EIRP_12, DEVICE_EIRP_13, DEVICE_EIRP_14,
+      DEVICE_EIRP_16, DEVICE_EIRP_18, DEVICE_EIRP_20, DEVICE_EIRP_21, DEVICE_EIRP_24,
+      DEVICE_EIRP_26, DEVICE_EIRP_27, DEVICE_EIRP_29, DEVICE_EIRP_30, DEVICE_EIRP_33,
+      DEVICE_EIRP_36, DEVICE_EIRP_8'
   - name: mac-settings.desired-ping-slot-data-rate-index
     type: string
     usage: 'allowed values: 0, 1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -13909,6 +13954,12 @@ ttn-lw-cli templates extend:
       DUTY_CYCLE_16384, DUTY_CYCLE_2, DUTY_CYCLE_2048, DUTY_CYCLE_256, DUTY_CYCLE_32,
       DUTY_CYCLE_32768, DUTY_CYCLE_4, DUTY_CYCLE_4096, DUTY_CYCLE_512, DUTY_CYCLE_64,
       DUTY_CYCLE_8, DUTY_CYCLE_8192'
+  - name: mac-settings.desired-max-eirp
+    type: string
+    usage: 'allowed values: DEVICE_EIRP_10, DEVICE_EIRP_12, DEVICE_EIRP_13, DEVICE_EIRP_14,
+      DEVICE_EIRP_16, DEVICE_EIRP_18, DEVICE_EIRP_20, DEVICE_EIRP_21, DEVICE_EIRP_24,
+      DEVICE_EIRP_26, DEVICE_EIRP_27, DEVICE_EIRP_29, DEVICE_EIRP_30, DEVICE_EIRP_33,
+      DEVICE_EIRP_36, DEVICE_EIRP_8'
   - name: mac-settings.desired-ping-slot-data-rate-index
     type: string
     usage: 'allowed values: 0, 1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8, 9,

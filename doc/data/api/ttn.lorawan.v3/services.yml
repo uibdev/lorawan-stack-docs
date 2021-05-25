@@ -496,6 +496,18 @@ ApplicationRegistry:
       http:
       - method: DELETE
         path: /applications/{application_id}/purge
+    IssueDevEUI:
+      name: IssueDevEUI
+      comment: |-
+        Request DevEUI from the configured address block for a device inside the application.
+        The maximum number of DevEUI's issued per application can be configured.
+      input:
+        name: ApplicationIdentifiers
+      output:
+        name: IssueDevEUIResponse
+      http:
+      - method: POST
+        path: /applications/{application_id}/dev-eui
 ApplicationUpStorage:
   name: ApplicationUpStorage
   comment: The ApplicationUpStorage service can be used to query stored application upstream messages.
